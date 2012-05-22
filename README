@@ -1,0 +1,1 @@
+This is a visualization tool for occupancy grids. An occupancy grid is a 3D data structure describing whether or not a voxel is occupied.
