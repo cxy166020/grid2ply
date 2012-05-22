@@ -6,7 +6,8 @@
 int main(int argc, char** argv)
 {
   int ArgCount = 1;
-  char* FileName = argv[ArgCount++];
+  char* InputName  = argv[ArgCount++];
+  char* OutputName = argv[ArgCount++];
 
   int XSize = atoi(argv[ArgCount++]);
   int YSize = atoi(argv[ArgCount++]);
@@ -30,7 +31,7 @@ int main(int argc, char** argv)
 	}
 
   std::ifstream ifm;
-  ifm.open(FileName, std::ios::binary);
+  ifm.open(InputName, std::ios::binary);
   ifm.read((char*)data, XSize*YSize*ZSize*sizeof(bool));
   ifm.close();
 
@@ -147,7 +148,7 @@ int main(int argc, char** argv)
 
   // Write results to output file
   std::ofstream ofm;
-  ofm.open("test.ply", std::ios::trunc);
+  ofm.open(OutputName, std::ios::trunc);
 
   ofm << "ply"                                               << std::endl;
   ofm << "format binary_little_endian 1.0"                   << std::endl;
