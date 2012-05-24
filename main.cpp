@@ -48,21 +48,21 @@ int main(int argc, char** argv)
 	    {
 	      // If the voxel is not visible, no further
 	      // processing is required
-	      if(!data[c])
+	      if(data[c]!=1)
 		{
 		  c++;
 		  continue;
 		}
 	      
 	      // Check x direction
-	      if(i==0       || data[c-1]==0)     IdxCount+=4;
-	      if(i==XSize-1 || data[c+1]==0)     IdxCount+=4;	      
+	      if(i==0       || data[c-1]!=1)     IdxCount+=4;
+	      if(i==XSize-1 || data[c+1]!=1)     IdxCount+=4;	      
 	      // Check y direction
-	      if(j==0       || data[c-XSize]==0) IdxCount+=4;
-	      if(j==YSize-1 || data[c+XSize]==0) IdxCount+=4;
+	      if(j==0       || data[c-XSize]!=1) IdxCount+=4;
+	      if(j==YSize-1 || data[c+XSize]!=1) IdxCount+=4;
 	      // Check z direction
-	      if(k==0       || data[c-XY]==0)    IdxCount+=4;
-	      if(k==ZSize-1 || data[c+XY]==0)    IdxCount+=4;
+	      if(k==0       || data[c-XY]!=1)    IdxCount+=4;
+	      if(k==ZSize-1 || data[c+XY]!=1)    IdxCount+=4;
 	      
 	      c++;
 	    }
@@ -86,21 +86,21 @@ int main(int argc, char** argv)
 	    {
 	      // If the voxel is not visible, no further
 	      // processing is required
-	      if(!data[c])
+	      if(data[c]!=1)
 		{
 		  c++;
 		  continue;
 		}
 	      
 	      // Check x direction
-	      if(i==0       || data[c-1]==0) 
+	      if(i==0       || data[c-1]!=1) 
 	      	{		  	      	  
 	      	  idx[ic++] = kXY   + jX   + i;
 	      	  idx[ic++] = kXY_p + jX   + i;
 	      	  idx[ic++] = kXY_p + jX_p + i;	      	  
 	      	  idx[ic++] = kXY   + jX_p + i;
 	      	}
-	      if(i==XSize-1 || data[c+1]==0) 
+	      if(i==XSize-1 || data[c+1]!=1) 
 	      	{		 
 	      	  idx[ic++] = kXY   + jX   + i+1;
 	      	  idx[ic++] = kXY   + jX_p + i+1;
@@ -108,14 +108,14 @@ int main(int argc, char** argv)
 	      	  idx[ic++] = kXY_p + jX   + i+1;
 	      	}
 	      // Check y direction
-	      if(j==0       || data[c-XSize]==0) 
+	      if(j==0       || data[c-XSize]!=1) 
 	      	{		 
 	      	  idx[ic++] = kXY   + jX  + i;
 	      	  idx[ic++] = kXY   + jX  + i+1;
 	      	  idx[ic++] = kXY_p + jX  + i+1;
 	      	  idx[ic++] = kXY_p + jX  + i;
 	      	}
-	      if(j==YSize-1 || data[c+XSize]==0) 
+	      if(j==YSize-1 || data[c+XSize]!=1) 
 	      	{
 	      	  idx[ic++] = kXY_p + jX_p + i;
 	      	  idx[ic++] = kXY_p + jX_p + i+1;
@@ -123,14 +123,14 @@ int main(int argc, char** argv)
 	      	  idx[ic++] = kXY   + jX_p + i;	      	  	      	 	      	  
 	      	}
 	      // Check z direction
-	      if(k==0       || data[c-XY]==0) 
+	      if(k==0       || data[c-XY]!=1) 
 	      	{		  
 	      	  idx[ic++] = kXY   + jX   + i;		  		 
 	      	  idx[ic++] = kXY   + jX_p + i;
 	      	  idx[ic++] = kXY   + jX_p + i+1;
 	      	  idx[ic++] = kXY   + jX   + i+1;
 	      	}
-	      if(k==ZSize-1 || data[c+XY]==0) 
+	      if(k==ZSize-1 || data[c+XY]!=1) 
 	      	{	      	
 	      	  idx[ic++] = kXY_p + jX   + i;		       
 	      	  idx[ic++] = kXY_p + jX   + i+1;
