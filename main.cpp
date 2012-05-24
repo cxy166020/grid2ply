@@ -16,7 +16,7 @@ int main(int argc, char** argv)
   int XYZ      = XSize*YSize*ZSize;
   int XYZ_plus = (XSize+1)*(YSize+1)*(ZSize+1);
 
-  bool* data = new bool[XYZ];
+  char* data = new char[XYZ];
   float* vertices = new float[XYZ_plus*3];
 
   unsigned int c = 0;
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 
   std::ifstream ifm;
   ifm.open(InputName, std::ios::binary);
-  ifm.read((char*)data, XSize*YSize*ZSize*sizeof(bool));
+  ifm.read((char*)data, XSize*YSize*ZSize*sizeof(char));
   ifm.close();
 
   // Count number of visible faces
