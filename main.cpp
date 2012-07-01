@@ -3,6 +3,11 @@
 #include <cstdlib>
 #include <cstdio>
 
+struct RGBA
+{
+  unsigned char R,G,B,A;
+};
+
 int main(int argc, char** argv)
 {
   int ArgCount = 1;
@@ -17,7 +22,7 @@ int main(int argc, char** argv)
   int XYZ_plus = (XSize+1)*(YSize+1)*(ZSize+1);
 
   char* data = new char[XYZ];
-  float* vertices = new float[XYZ_plus*3];
+  float* vertices = new float[XYZ_plus*4];
 
   unsigned int c = 0;
  
@@ -28,6 +33,12 @@ int main(int argc, char** argv)
 	  vertices[c++] = (float)i;
 	  vertices[c++] = (float)j;
 	  vertices[c++] = (float)k;
+
+	  RGBA* pColor = (RGBA*)&vertices[c++];
+	  pColor->R = 128;
+	  pColor->G = 128;
+	  pColor->B = 128;
+	  pColor->A = 0;
 	}
 
   std::ifstream ifm;
@@ -146,15 +157,16 @@ int main(int argc, char** argv)
   std::cout << "IdxCount: " << IdxCount << std::endl;
 
   // Clean up unsed vertices
-  float*        cVertices = new float[IdxCount*3];
+  float*        cVertices = new float[IdxCount*4];
   unsigned int* cIdx      = new unsigned int[IdxCount];  
 
   unsigned int v=0;
   for(unsigned int i=0; i<IdxCount; i++)
     {
-      cVertices[v++] = vertices[idx[i]*3  ];
-      cVertices[v++] = vertices[idx[i]*3+1];
-      cVertices[v++] = vertices[idx[i]*3+2];
+      cVertices[v++] = vertices[idx[i]*4  ];
+      cVertices[v++] = vertices[idx[i]*4+1];
+      cVertices[v++] = vertices[idx[i]*4+2];
+      cVertices[v++] = vertices[idx[i]*4+3];
 
       cIdx[i] = i;
     }
@@ -169,12 +181,16 @@ int main(int argc, char** argv)
   ofm << "property float x"                                  << std::endl;
   ofm << "property float y"                                  << std::endl;
   ofm << "property float z"                                  << std::endl;
+  ofm << "property uchar red"                                << std::endl;
+  ofm << "property uchar green"                              << std::endl;
+  ofm << "property uchar blue"                               << std::endl;
+  ofm << "property uchar alpha"                              << std::endl;
   ofm << "element face " << (int)(IdxCount/4)                << std::endl;
   ofm << "property list uchar uint vertex_indices"           << std::endl;
   ofm << "end_header"                                        << std::endl;
 
   // Write vertex
-  ofm.write((char*)cVertices, IdxCount*3*sizeof(float));
+  ofm.write((char*)cVertices, IdxCount*4*sizeof(float));
 
   // Write faces
   unsigned char face_c = 4;
